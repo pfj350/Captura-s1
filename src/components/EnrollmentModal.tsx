@@ -2,6 +2,8 @@ import { useState, useEffect, startTransition } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, ArrowRight, Calendar, MessageCircle, AlertCircle, Sparkles } from 'lucide-react';
 import { ParticipantData } from '../types';
+import { sendToGoogleSheet } from '../lib/google-sheet';
+import { trackCompleteRegistration, trackContact, trackLeadStep1, updatePixelUserData } from '../lib/meta-tracking';
 
 interface EnrollmentModalProps {
   isOpen: boolean;
@@ -91,6 +93,17 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
   const handleNext = () => {
     if (step === 1) {
       if (validateStep1()) {
+        trackLeadStep1({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+        });
+        updatePixelUserData({
+          email: formData.email,
+          phone: formData.phone,
+          name: formData.name,
+          country: 'br',
+        });
         startTransition(() => {
           setStep(2);
         });
@@ -104,9 +117,10 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
           registrationId: generatedId
         };
         
-        // Save in localStorage
         localStorage.setItem('storywork_participant', JSON.stringify(participant));
-        
+        trackCompleteRegistration(participant);
+        void sendToGoogleSheet(participant);
+
         startTransition(() => {
           setStep(3);
           onSuccess(participant);
@@ -131,7 +145,7 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
   const handleGoogleCalendar = () => {
     const title = encodeURIComponent('Conecta Storywork com Sthefanny Loredo');
     const details = encodeURIComponent('Evento exclusivo para aprender a fazer conexões profissionais autênticas, gerar oportunidades reais e vender sem precisar viralizar.');
-    const dates = '20260706T232200Z/20260707T012200Z'; // 06 July 2026 20:22 - 22:22 BRT (UTC-3 is 23:22 UTC)
+    const dates = '20260708T233000Z/20260709T013000Z'; // 08 July 2026 20:30 - 22:30 BRT (UTC-3 is 23:30 UTC)
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&dates=${dates}`;
     window.open(url, '_blank');
   };
@@ -436,7 +450,7 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
                             Data do Evento
                           </span>
                           <div className="text-[10.5px] sm:text-xs font-bold text-white">
-                            Seg, 6 Julho, 2026
+                            Qua, 8 Julho, 2026
                           </div>
                         </div>
                         <div>
@@ -444,7 +458,7 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
                             Horário
                           </span>
                           <div className="text-[10.5px] sm:text-xs font-bold text-white">
-                            20h22 (Horário BR)
+                            20h30 (Horário BR)
                           </div>
                         </div>
                       </div>
@@ -508,6 +522,11 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
                       href="https://wa.me/5511999999999?text=Quero%20entrar%20no%20grupo%20vip%20do%20Conecta%20Storywork"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => {
+                        const saved = localStorage.getItem('storywork_participant');
+                        const participant = saved ? JSON.parse(saved) as ParticipantData : null;
+                        trackContact(participant);
+                      }}
                       className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white py-3 px-4 font-bold text-xs sm:text-sm transition-all duration-200 shadow-md hover:scale-[1.02] active:scale-[0.98] animate-pulse"
                     >
                       <MessageCircle className="h-5 w-5 fill-current shrink-0" />

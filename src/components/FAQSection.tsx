@@ -25,7 +25,7 @@ export default function FAQSection() {
     {
       id: 'q-5',
       question: 'Como funcionará a transmissão e como recebo o meu acesso?',
-      answer: 'O Conecta Storywork será transmitido no dia 6 de Julho às 20:22 (Horário de Brasília). A transmissão é exclusiva e fechada para inscritos. Assim que preencher o formulário nesta página, você receberá a confirmação por e-mail e terá acesso direto ao nosso Grupo VIP do WhatsApp, onde enviaremos o link oficial de acesso à sala, materiais complementares e avisos cruciais.'
+      answer: 'O Conecta Storywork será transmitido no dia 8 de Julho (quarta-feira) às 20:30 (Horário de Brasília). A transmissão é exclusiva e fechada para inscritos. Assim que preencher o formulário nesta página, você receberá a confirmação por e-mail e terá acesso direto ao nosso Grupo VIP do WhatsApp, onde enviaremos o link oficial de acesso à sala, materiais complementares e avisos cruciais.'
     },
     {
       id: 'q-6',

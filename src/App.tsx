@@ -20,37 +20,39 @@ import { ParticipantData } from './types';
 import EnrollmentModal from './components/EnrollmentModal';
 import LearnGrid from './components/LearnGrid';
 import FAQSection from './components/FAQSection';
+import { initMetaTracking, trackCtaClick, trackInitiateCheckout } from './lib/meta-tracking';
 
 const CAROUSEL_IMAGES = [
   {
-    src: "/src/assets/images/sthefanny_tv_studio_1782327264845.jpg",
+    src: "/images/speaker/sthefanny-studio.webp",
+    alt: "Sthefanny Loredo no estúdio de rádio",
+    label: "Estúdio de Rádio"
+  },
+  {
+    src: "/images/speaker/sthefanny-g1-reportagem.webp",
+    alt: "Sthefanny Loredo em reportagem no G1",
+    label: "Reportagem G1"
+  },
+  {
+    src: "/images/speaker/sthefanny-jornal-nacional.webp",
+    alt: "Sthefanny Loredo no Jornal Nacional",
+    label: "Jornal Nacional"
+  },
+  {
+    src: "/images/speaker/sthefanny-evento-1.webp",
+    alt: "Sthefanny Loredo no estúdio Conecta Brasil",
+    label: "Conecta Brasil"
+  },
+  {
+    src: "/images/speaker/sthefanny-evento-2.webp",
     alt: "Sthefanny Loredo nos bastidores da TV",
     label: "Bastidores de TV"
   },
   {
-    src: "/src/assets/images/sthefanny_on_stage_1782327252155.jpg",
-    alt: "Sthefanny Loredo no palco de evento",
-    label: "No Palco"
-  },
-  {
-    src: "/src/assets/images/sthefanny_anchor_desk_1782327717417.jpg",
-    alt: "Sthefanny Loredo na bancada de notícias",
-    label: "Bancada de Notícias"
-  },
-  {
-    src: "/src/assets/images/sthefanny_mentoring_1782327730042.jpg",
-    alt: "Sthefanny Loredo em treinamento de marcas",
-    label: "Mentoria & Treinamento"
-  },
-  {
-    src: "/src/assets/images/sthefanny_control_room_1782327742809.jpg",
-    alt: "Sthefanny Loredo no estúdio de controle",
-    label: "Estúdio de Controle"
-  },
-  {
-    src: "/src/assets/images/sthefanny_receiving_applause_1782327755760.jpg",
-    alt: "Sthefanny Loredo recebendo aplausos no palco",
-    label: "Reconhecimento"
+    src: "/images/speaker/sthefanny-evento-3.webp",
+    alt: "Sthefanny Loredo no estúdio do Fantástico",
+    label: "Estúdio Fantástico",
+    objectPosition: "center 22%"
   }
 ];
 
@@ -64,6 +66,10 @@ export default function App() {
       setCarouselIndex((prev) => (prev + 1) % CAROUSEL_IMAGES.length);
     }, 4000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    void initMetaTracking();
   }, []);
 
   useEffect(() => {
@@ -88,7 +94,9 @@ export default function App() {
     setParticipant(null);
   };
 
-  const openRegisterModal = () => {
+  const openRegisterModal = (location = 'cta') => {
+    trackInitiateCheckout();
+    trackCtaClick(location);
     setIsModalOpen(true);
   };
 
@@ -101,7 +109,7 @@ export default function App() {
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2.5">
             <div className="flex items-center justify-center gap-1.5 flex-wrap">
               <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-pulse text-[#0d1b3d] shrink-0" />
-              <span>Você é VIP! Inscrição confirmada para 6 de Julho.</span>
+              <span>Você é VIP! Inscrição confirmada para 8 de Julho.</span>
               <span className="bg-[#0d1b3d]/10 px-1.5 py-0.5 rounded font-mono text-[9.5px] xs:text-[11px] text-[#0d1b3d]">
                 Cód: <strong className="font-extrabold">{participant.registrationId}</strong>
               </span>
@@ -131,14 +139,18 @@ export default function App() {
       )}
 
       {/* GLOBAL HEADER BAR - Elegant, responsive, fully optimized for all devices with emphasized GRATUITO and integrated date/time info */}
-      <header id="main-header" className="sticky top-0 z-40 w-full bg-[#0d1b3d]/95 backdrop-blur-md border-b border-[#b8964c]/40 py-2.5 sm:py-4 px-3 sm:px-6 md:px-12 transition-all shadow-md">
+      <header id="main-header" className="sticky top-0 z-40 w-full bg-[#0d1b3d]/95 backdrop-blur-md border-b border-[#b8964c]/40 py-3 sm:py-4 md:py-5 px-3 sm:px-6 md:px-12 transition-all shadow-md">
         <div className="max-w-5xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Logo Brand Column */}
-          <a href="#hero-section" className="flex flex-col items-start group shrink-0">
-            <span className="font-serif italic font-extrabold text-white leading-tight select-none transition-colors group-hover:text-[#d9c8a9] text-[13.5px] xs:text-base sm:text-xl">
-              Conecta <span className="font-sans not-italic text-[#b8964c] text-[8.5px] xs:text-[10px] sm:text-xs font-black tracking-widest pl-0.5 sm:pl-1 uppercase">Storywork</span>
-            </span>
+          <a href="#hero-section" className="flex flex-col items-start group shrink-0 min-w-0">
+            <img
+              src="/images/conexao-alem-da-tela-logo.png"
+              alt="Conexão Além da Tela"
+              width={520}
+              height={277}
+              className="h-14 xs:h-16 sm:h-[4.5rem] md:h-20 lg:h-24 w-auto object-contain object-left transition-opacity group-hover:opacity-90"
+            />
             <span className="text-[7px] sm:text-[9.5px] uppercase font-bold tracking-widest text-[#f3ede2]/80 leading-none mt-0.5 sm:mt-1 hidden xs:block">
               Por Sthefanny Loredo
             </span>
@@ -152,8 +164,8 @@ export default function App() {
               {/* Calendar & Date */}
               <div className="flex items-center gap-1 text-[10px] xs:text-[11px] sm:text-[13px] font-black text-white">
                 <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-[#b8964c] stroke-[2.5]" />
-                <span className="hidden sm:inline">6 de Julho</span>
-                <span className="inline sm:hidden">06/Jul</span>
+                <span className="hidden sm:inline">8 de Julho</span>
+                <span className="inline sm:hidden">08/Jul</span>
               </div>
 
               {/* Central Divider Dot */}
@@ -162,7 +174,7 @@ export default function App() {
               {/* Clock & Time */}
               <div className="flex items-center gap-1 text-[10px] xs:text-[11px] sm:text-[13px] font-black text-white">
                 <Clock className="h-3 w-3 sm:h-4 sm:w-4 text-[#b8964c] stroke-[2.5]" />
-                <span>20h22</span>
+                <span>20h30</span>
               </div>
             </div>
 
@@ -207,7 +219,7 @@ export default function App() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
               <button
                 id="hero-floating-cta"
-                onClick={openRegisterModal}
+                onClick={() => openRegisterModal('hero')}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#d9c8a9] hover:bg-[#cbb694] text-[#0d1b3d] py-3 sm:py-3.5 px-5 sm:px-6 font-bold text-sm transition-all duration-200 shadow-md hover:translate-y-[-1.5px] cursor-pointer"
               >
                 <MessageCircle className="h-4 w-4 fill-current animate-bounce" />
@@ -223,7 +235,7 @@ export default function App() {
                 </div>
                 <div>
                   <span className="text-xs sm:text-sm md:text-base font-bold text-white block leading-tight">
-                    6 de Julho às 20h22
+                    8 de Julho (quarta) às 20h30
                   </span>
                   <span className="text-[8.5px] sm:text-[9.5px] uppercase font-bold tracking-widest text-[#f3ede2]/70 block leading-none">
                     DATA DO EVENTO
@@ -243,7 +255,7 @@ export default function App() {
               {/* Inner wrapper layout */}
               <div className="relative h-full w-full overflow-hidden rounded-[20px] sm:rounded-[28px] bg-[#132247]">
                 <img
-                  src="/src/assets/images/sthefanny_loredo_portrait_1782072363155.jpg"
+                  src="/images/sthefanny-hero.webp"
                   alt="Sthefanny Loredo"
                   referrerPolicy="no-referrer"
                   className="h-full w-full object-cover object-center"
@@ -266,10 +278,10 @@ export default function App() {
                 </svg>
                 <div className="absolute inset-3.5 sm:inset-4 rounded-full overflow-hidden bg-[#132247] border border-[#b8964c] flex items-center justify-center shadow-inner">
                   <img
-                    src="/src/assets/images/storywork_symbol_1782324569649.jpg"
-                    alt="Storywork Symbol"
+                    src="/images/loredo-symbol.png"
+                    alt="Símbolo Loredo Storywork"
                     referrerPolicy="no-referrer"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-contain p-1.5 sm:p-2"
                   />
                 </div>
               </div>
@@ -287,30 +299,27 @@ export default function App() {
                 {/* Globo Logo */}
                 <div className="flex items-center gap-1 bg-white/5 hover:bg-white/10 px-1.5 py-0.5 sm:py-1 rounded-md text-[7.5px] sm:text-[9px] font-bold text-[#f3ede2] border border-white/10 transition-colors">
                   <img
-                    src="/src/assets/images/globo_logo_minimal_1782326926298.jpg"
-                    alt="Globo"
-                    referrerPolicy="no-referrer"
-                    className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full object-cover shrink-0"
+                    src="/images/logos/globo.svg"
+                    alt="TV Globo"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain shrink-0"
                   />
                   <span>GLOBO</span>
                 </div>
                 {/* SBT Logo */}
                 <div className="flex items-center gap-1 bg-white/5 hover:bg-white/10 px-1.5 py-0.5 sm:py-1 rounded-md text-[7.5px] sm:text-[9px] font-bold text-[#f3ede2] border border-white/10 transition-colors">
                   <img
-                    src="/src/assets/images/sbt_logo_minimal_1782326939642.jpg"
+                    src="/images/logos/sbt.svg"
                     alt="SBT"
-                    referrerPolicy="no-referrer"
-                    className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full object-cover shrink-0"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain shrink-0"
                   />
                   <span>SBT</span>
                 </div>
                 {/* Band Logo */}
                 <div className="flex items-center gap-1 bg-white/5 hover:bg-white/10 px-1.5 py-0.5 sm:py-1 rounded-md text-[7.5px] sm:text-[9px] font-bold text-[#f3ede2] border border-white/10 transition-colors">
                   <img
-                    src="/src/assets/images/band_logo_minimal_1782326952189.jpg"
+                    src="/images/logos/band.svg"
                     alt="Band"
-                    referrerPolicy="no-referrer"
-                    className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full object-cover shrink-0"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain shrink-0"
                   />
                   <span>BAND</span>
                 </div>
@@ -407,7 +416,7 @@ export default function App() {
               </p>
             </div>
             <button
-              onClick={openRegisterModal}
+              onClick={() => openRegisterModal('benefits')}
               className="w-full md:w-auto rounded-2xl bg-[#d9c8a9] hover:bg-[#cbb694] text-[#0d1b3d] px-6 py-3 sm:py-3.5 font-bold text-xs sm:text-sm tracking-wide shadow-md whitespace-nowrap cursor-pointer transition-all hover:scale-105 active:scale-95 text-center"
             >
               Escolho Clientes Qualificados
@@ -509,7 +518,7 @@ export default function App() {
               <div className="pt-2">
                 <button
                   type="button"
-                  onClick={openRegisterModal}
+                  onClick={() => openRegisterModal('audience')}
                   className="w-full rounded-2xl bg-[#d9c8a9] hover:bg-[#cbb694] text-[#0d1b3d] py-3 sm:py-3.5 px-6 font-bold text-xs sm:text-sm shadow-md cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] text-center"
                 >
                   Este Evento é Para Mim, Garantir Vaga
@@ -559,10 +568,11 @@ export default function App() {
                 
                 <div className="relative h-full w-full overflow-hidden rounded-[18px] sm:rounded-[24px] bg-[#132247]">
                   <img
-                    src="/src/assets/images/sthefanny_loredo_portrait_1782072363155.jpg"
-                    alt="Sthefanny Loredo Portrait"
+                    src="/images/speaker/sthefanny-portrait.webp"
+                    alt="Sthefanny Loredo no Fantástico"
                     referrerPolicy="no-referrer"
-                    className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    style={{ objectPosition: '38% center' }}
                   />
                   <div className="absolute bottom-2.5 left-2.5 bg-[#0d1b3d]/90 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-[#b8964c]/40 text-[9px] font-bold text-[#d9c8a9] tracking-wider uppercase">
                     Palestrante & Mentora
@@ -585,7 +595,8 @@ export default function App() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 1.05 }}
                         transition={{ duration: 0.6, ease: "easeInOut" }}
-                        className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        style={{ objectPosition: CAROUSEL_IMAGES[carouselIndex].objectPosition ?? 'center' }}
                       />
                     </AnimatePresence>
                     <AnimatePresence mode="wait">
@@ -616,7 +627,8 @@ export default function App() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 1.05 }}
                         transition={{ duration: 0.6, ease: "easeInOut" }}
-                        className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        style={{ objectPosition: CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].objectPosition ?? 'center' }}
                       />
                     </AnimatePresence>
                     <AnimatePresence mode="wait">
@@ -657,17 +669,21 @@ export default function App() {
       <footer className="bg-[#0d1b3d] text-[#f3ede2]/80 py-8 sm:py-12 px-4 sm:px-6 border-t border-[#b8964c]/40">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
           
-          <div className="space-y-1">
-            <span className="font-serif italic font-semibold text-lg text-white">
-              Conecta <span className="font-sans not-italic text-[#b8964c] text-xs font-black tracking-widest pl-1 uppercase">Storywork</span>
-            </span>
+          <div className="space-y-1 flex flex-col items-center md:items-start">
+            <img
+              src="/images/conexao-alem-da-tela-logo.png"
+              alt="Conexão Além da Tela"
+              width={520}
+              height={277}
+              className="h-14 xs:h-16 sm:h-[4.5rem] md:h-20 lg:h-24 w-auto object-contain object-center md:object-left"
+            />
             <span className="block text-[8px] sm:text-[10px] uppercase font-bold tracking-widest text-[#f3ede2]/75 leading-none">
               Por Sthefanny Loredo
             </span>
           </div>
 
           <div className="text-[10px] sm:text-xs text-[#f3ede2]/60 text-center space-y-1">
-            <p>© 2026 Conecta Storywork • Todos os direitos reservados.</p>
+            <p>© 2026 Conexão Além da Tela • Todos os direitos reservados.</p>
             <p>Desenvolvido de forma exclusiva para Sthefanny Loredo.</p>
           </div>
 
@@ -708,7 +724,7 @@ export default function App() {
           {/* Center Button */}
           <div className="flex-1 max-w-[110px] xs:max-w-[130px] sm:max-w-[200px] md:max-w-[240px] mx-0.5 xs:mx-1 shrink-0">
             <button
-              onClick={openRegisterModal}
+              onClick={() => openRegisterModal('fixed_footer')}
               className="w-full rounded-full bg-[#d9c8a9] hover:bg-[#cbb694] text-[#0d1b3d] text-[8px] xs:text-[9.5px] sm:text-[11px] md:text-xs font-black tracking-wider xs:tracking-widest uppercase py-1.5 xs:py-2.5 sm:py-3 shadow-md hover:scale-[1.03] active:scale-[0.97] transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center justify-center gap-1 md:gap-2 px-1 xs:px-3 text-center"
             >
               <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 animate-pulse shrink-0 text-[#0d1b3d] hidden sm:inline" />
