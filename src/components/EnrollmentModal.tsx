@@ -519,7 +519,7 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
 
                     <a
                       id="join-vip-whatsapp"
-                      href="https://wa.me/5511999999999?text=Quero%20entrar%20no%20grupo%20vip%20do%20Conecta%20Storywork"
+                      href="https://wa.me/5561982360909?text=Quero%20entrar%20no%20grupo%20vip%20do%20Conecta%20Storywork"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => {

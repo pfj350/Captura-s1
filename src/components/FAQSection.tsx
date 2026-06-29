@@ -118,7 +118,7 @@ export default function FAQSection() {
 
               <div className="mt-6 sm:mt-8">
                 <a
-                  href="https://wa.me/5511999999999?text=Ola!%20Tenho%20duvidas%20sobre%20o%20evento%20Conecta%20Storywork"
+                  href="https://wa.me/5561982360909?text=Ola!%20Tenho%20duvidas%20sobre%20o%20evento%20Conecta%20Storywork"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-white py-3 sm:py-3.5 px-6 font-bold text-xs sm:text-sm transition-all duration-200 shadow-md hover:scale-[1.02] active:scale-[0.98]"
