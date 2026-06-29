@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,300..900;1,300..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  
+  --color-brand-bg: #0d1b3d;
+  --color-brand-dark: #ffffff;
+  --color-brand-accent: #d9c8a9;
+  --color-brand-accent-hover: #cbb694;
+  --color-brand-badge-bg: #d9c8a9;
+  --color-brand-card-bg: #132247;
+  --color-brand-card-border: #b8964c;
+  --color-brand-muted: #f3ede2;
+}
+
+/* Specific styling details for the mockup's unique visual language */
+.heading-gradient {
+  letter-spacing: -0.03em;
+}
+
+::selection {
+  background-color: var(--color-brand-badge-bg);
+  color: var(--color-brand-dark);
+}

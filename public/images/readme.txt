@@ -1,0 +1,1 @@
+This folder is for images that can be used directly on the page. In Vite, any image placed in this folder (public/images) is copied to the build output (dist/images) and can be loaded via '/images/filename.jpg'.
