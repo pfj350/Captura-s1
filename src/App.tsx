@@ -14,7 +14,7 @@ import {
   Mic
 } from 'lucide-react';
 import { ParticipantData } from './types';
-import { initMetaTracking, trackCtaClick, trackInitiateCheckout } from './lib/meta-tracking';
+import { initMetaTracking } from './lib/meta-tracking';
 
 const LearnGrid = lazy(() => import('./components/LearnGrid'));
 const FAQSection = lazy(() => import('./components/FAQSection'));
@@ -83,12 +83,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const runTracking = () => void initMetaTracking();
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(runTracking);
-    } else {
-      setTimeout(runTracking, 2000);
-    }
+    void initMetaTracking();
   }, []);
 
   useEffect(() => {
@@ -113,10 +108,8 @@ export default function App() {
     setParticipant(null);
   };
 
-  const openRegisterModal = (location = 'cta') => {
+  const openRegisterModal = () => {
     setShouldLoadModal(true);
-    trackInitiateCheckout();
-    trackCtaClick(location);
     setIsModalOpen(true);
   };
 
@@ -238,7 +231,7 @@ export default function App() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
               <button
                 id="hero-floating-cta"
-                onClick={() => openRegisterModal('hero')}
+                onClick={() => openRegisterModal()}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#d9c8a9] hover:bg-[#cbb694] text-[#0d1b3d] py-3 sm:py-3.5 px-5 sm:px-6 font-bold text-sm transition-all duration-200 shadow-md hover:translate-y-[-1.5px] cursor-pointer"
               >
                 <MessageCircle className="h-4 w-4 fill-current animate-bounce" />
@@ -468,7 +461,7 @@ export default function App() {
               </p>
             </div>
             <button
-              onClick={() => openRegisterModal('benefits')}
+              onClick={() => openRegisterModal()}
               className="w-full md:w-auto rounded-2xl bg-[#d9c8a9] hover:bg-[#cbb694] text-[#0d1b3d] px-6 py-3 sm:py-3.5 font-bold text-xs sm:text-sm tracking-wide shadow-md whitespace-nowrap cursor-pointer transition-all hover:scale-105 active:scale-95 text-center"
             >
               Escolho Clientes Qualificados
@@ -572,7 +565,7 @@ export default function App() {
               <div className="pt-2">
                 <button
                   type="button"
-                  onClick={() => openRegisterModal('audience')}
+                  onClick={() => openRegisterModal()}
                   className="w-full rounded-2xl bg-[#d9c8a9] hover:bg-[#cbb694] text-[#0d1b3d] py-3 sm:py-3.5 px-6 font-bold text-xs sm:text-sm shadow-md cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] text-center"
                 >
                   Este Evento é Para Mim, Garantir Vaga
@@ -771,7 +764,7 @@ export default function App() {
           {/* Center Button */}
           <div className="flex-1 max-w-[110px] xs:max-w-[130px] sm:max-w-[200px] md:max-w-[240px] mx-0.5 xs:mx-1 shrink-0">
             <button
-              onClick={() => openRegisterModal('fixed_footer')}
+              onClick={() => openRegisterModal()}
               className="w-full rounded-full bg-[#d9c8a9] hover:bg-[#cbb694] text-[#0d1b3d] text-[8px] xs:text-[9.5px] sm:text-[11px] md:text-xs font-black tracking-wider xs:tracking-widest uppercase py-1.5 xs:py-2.5 sm:py-3 shadow-md hover:scale-[1.03] active:scale-[0.97] transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center justify-center gap-1 md:gap-2 px-1 xs:px-3 text-center"
             >
               <Sparkles className="h-3 w-3 sm:h-3.5 sm:w-3.5 animate-pulse shrink-0 text-[#0d1b3d] hidden sm:inline" />

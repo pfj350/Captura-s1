@@ -58,30 +58,12 @@ function captureFbclid(): void {
 function loadPixelScript(): Promise<void> {
   if (pixelLoaded || !PIXEL_ID) return Promise.resolve();
 
+  if (window.fbq) {
+    pixelLoaded = true;
+    return Promise.resolve();
+  }
+
   return new Promise((resolve) => {
-    if (window.fbq) {
-      pixelLoaded = true;
-      resolve();
-      return;
-    }
-
-    const n = function (...args: unknown[]) {
-      const fbqFn = n as unknown as {
-        callMethod?: (...a: unknown[]) => void;
-        queue: unknown[][];
-      };
-      if (fbqFn.callMethod) {
-        fbqFn.callMethod(...args);
-      } else {
-        fbqFn.queue.push(args);
-      }
-    };
-    (n as unknown as { queue: unknown[][] }).queue = [];
-    (n as unknown as { loaded: boolean }).loaded = true;
-    (n as unknown as { version: string }).version = '2.0';
-    window.fbq = n as Window['fbq'];
-    window._fbq = n;
-
     const script = document.createElement('script');
     script.async = true;
     script.src = 'https://connect.facebook.net/en_US/fbevents.js';
@@ -206,31 +188,6 @@ export async function initMetaTracking(): Promise<void> {
   });
 }
 
-export function trackInitiateCheckout(): void {
-  void trackEvent('InitiateCheckout', {
-    customData: {
-      content_name: CONTENT_NAME,
-      content_category: 'registration_modal',
-    },
-  });
-}
-
-export function trackLeadStep1(data: Pick<ParticipantData, 'name' | 'email' | 'phone'>): void {
-  void trackEvent('Lead', {
-    user: {
-      email: data.email,
-      phone: data.phone,
-      name: data.name,
-      country: 'br',
-    },
-    customData: {
-      content_name: CONTENT_NAME,
-      content_category: 'step_1_contact',
-      status: 'partial',
-    },
-  });
-}
-
 export function trackCompleteRegistration(data: ParticipantData): void {
   void trackEvent('CompleteRegistration', {
     user: {
@@ -285,15 +242,6 @@ export function trackContact(participant?: ParticipantData | null): void {
     customData: {
       content_name: CONTENT_NAME,
       content_category: 'whatsapp_group',
-    },
-  });
-}
-
-export function trackCtaClick(location: string): void {
-  void trackEvent('CustomizeProduct', {
-    customData: {
-      content_name: CONTENT_NAME,
-      content_category: location,
     },
   });
 }

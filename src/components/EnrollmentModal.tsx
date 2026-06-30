@@ -4,7 +4,7 @@ import { X, Check, ArrowRight, Calendar, MessageCircle, AlertCircle, Sparkles } 
 import { ParticipantData } from '../types';
 import { getStoredUtms } from '../lib/utm';
 import { sendToGoogleSheet } from '../lib/google-sheet';
-import { trackCompleteRegistration, trackContact, trackLeadStep1, updatePixelUserData } from '../lib/meta-tracking';
+import { trackCompleteRegistration, trackContact, updatePixelUserData } from '../lib/meta-tracking';
 
 interface EnrollmentModalProps {
   isOpen: boolean;
@@ -94,11 +94,6 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
   const handleNext = () => {
     if (step === 1) {
       if (validateStep1()) {
-        trackLeadStep1({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-        });
         updatePixelUserData({
           email: formData.email,
           phone: formData.phone,
