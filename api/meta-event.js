@@ -1,4 +1,4 @@
-const { createHash } = require('node:crypto');
+import { createHash } from 'node:crypto';
 
 const PIXEL_ID = process.env.META_PIXEL_ID;
 const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN;
@@ -67,7 +67,7 @@ function parseBody(req) {
   return req.body;
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -129,4 +129,4 @@ module.exports = async function handler(req, res) {
     console.error('[Meta CAPI] Request failed:', error);
     return res.status(500).json({ error: 'Failed to send event', message: String(error) });
   }
-};
+}
