@@ -1,64 +1,14 @@
-import { createHash } from 'crypto';
+const { createHash } = require('node:crypto');
 
 const PIXEL_ID = process.env.META_PIXEL_ID;
 const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN;
 const TEST_EVENT_CODE = process.env.META_TEST_EVENT_CODE;
 
-interface UserDataInput {
-  email?: string;
-  phone?: string;
-  name?: string;
-  external_id?: string;
-  country?: string;
-  fbp?: string;
-  fbc?: string;
-}
-
-interface EventPayload {
-  event_name: string;
-  event_id: string;
-  event_source_url?: string;
-  user_data?: UserDataInput;
-  custom_data?: Record<string, unknown>;
-}
-
-interface VercelRequest {
-  method?: string;
-  body?: EventPayload;
-  headers: Record<string, string | string[] | undefined>;
-  socket?: { remoteAddress?: string };
-}
-
-interface VercelResponse {
-  setHeader(name: string, value: string): void;
-  status(code: number): { json(data: unknown): void; end(): void };
-}
-const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN;
-const TEST_EVENT_CODE = process.env.META_TEST_EVENT_CODE;
-
-interface UserDataInput {
-  email?: string;
-  phone?: string;
-  name?: string;
-  external_id?: string;
-  country?: string;
-  fbp?: string;
-  fbc?: string;
-}
-
-interface EventPayload {
-  event_name: string;
-  event_id: string;
-  event_source_url?: string;
-  user_data?: UserDataInput;
-  custom_data?: Record<string, unknown>;
-}
-
-function hashValue(value: string): string {
+function hashValue(value) {
   return createHash('sha256').update(value.trim().toLowerCase()).digest('hex');
 }
 
-function normalizePhone(phone: string): string {
+function normalizePhone(phone) {
   let digits = phone.replace(/\D/g, '');
   if (digits.startsWith('0')) {
     digits = digits.replace(/^0+/, '');
@@ -69,7 +19,7 @@ function normalizePhone(phone: string): string {
   return digits;
 }
 
-function splitName(fullName: string): { fn: string; ln: string } {
+function splitName(fullName) {
   const parts = fullName.trim().split(/\s+/).filter(Boolean);
   return {
     fn: parts[0] ?? '',
@@ -77,11 +27,8 @@ function splitName(fullName: string): { fn: string; ln: string } {
   };
 }
 
-function buildUserData(
-  input: UserDataInput | undefined,
-  req: VercelRequest
-): Record<string, string> {
-  const userData: Record<string, string> = {};
+function buildUserData(input, req) {
+  const userData = {};
 
   if (input?.email) userData.em = hashValue(input.email);
   if (input?.phone) userData.ph = hashValue(normalizePhone(input.phone));
@@ -98,7 +45,8 @@ function buildUserData(
   if (input?.fbc) userData.fbc = input.fbc;
 
   const forwarded = req.headers['x-forwarded-for'];
-  const clientIp = typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : req.socket?.remoteAddress;
+  const clientIp =
+    typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : req.socket?.remoteAddress;
   if (clientIp) userData.client_ip_address = clientIp;
 
   const userAgent = req.headers['user-agent'];
@@ -107,7 +55,19 @@ function buildUserData(
   return userData;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+function parseBody(req) {
+  if (!req.body) return null;
+  if (typeof req.body === 'string') {
+    try {
+      return JSON.parse(req.body);
+    } catch {
+      return null;
+    }
+  }
+  return req.body;
+}
+
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -121,10 +81,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (!PIXEL_ID || !ACCESS_TOKEN) {
+    console.error('[Meta CAPI] META_PIXEL_ID ou META_ACCESS_TOKEN não configurados');
     return res.status(503).json({ error: 'Meta API not configured' });
   }
 
-  const body = req.body as EventPayload;
+  const body = parseBody(req);
   if (!body?.event_name || !body?.event_id) {
     return res.status(400).json({ error: 'event_name and event_id are required' });
   }
@@ -137,7 +98,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         event_name: body.event_name,
         event_time: eventTime,
         event_id: body.event_id,
-        event_source_url: body.event_source_url ?? 'https://conectastorywork.com',
+        event_source_url: body.event_source_url ?? 'https://evento.storywork.com.br',
         action_source: 'website',
         user_data: buildUserData(body.user_data, req),
         custom_data: body.custom_data ?? {},
@@ -166,6 +127,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ success: true, result });
   } catch (error) {
     console.error('[Meta CAPI] Request failed:', error);
-    return res.status(500).json({ error: 'Failed to send event' });
+    return res.status(500).json({ error: 'Failed to send event', message: String(error) });
   }
-}
+};

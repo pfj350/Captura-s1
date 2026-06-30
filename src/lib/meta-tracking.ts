@@ -138,7 +138,7 @@ async function sendCapiEvent(
   customData?: MetaCustomData
 ): Promise<void> {
   try {
-    await fetch('/api/meta-event', {
+    const response = await fetch('/api/meta-event', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -161,8 +161,13 @@ async function sendCapiEvent(
       }),
       keepalive: true,
     });
+
+    if (!response.ok) {
+      const body = await response.json().catch(() => ({}));
+      console.warn('[Meta CAPI] Evento rejeitado:', eventName, response.status, body);
+    }
   } catch (error) {
-    console.warn('[Meta CAPI] Falha ao enviar evento:', error);
+    console.warn('[Meta CAPI] Falha ao enviar evento:', eventName, error);
   }
 }
 
@@ -179,11 +184,8 @@ async function trackEvent(
   await initPixel(options?.user);
 
   if (window.fbq) {
-    const pixelPayload = {
-      ...options?.customData,
-      eventID: eventId,
-    };
-    window.fbq('track', eventName, pixelPayload);
+    // eventID deve ir no 4º argumento para deduplicação com a CAPI
+    window.fbq('track', eventName, options?.customData ?? {}, { eventID: eventId });
   }
 
   void sendCapiEvent(eventName, eventId, options?.user, options?.customData);
