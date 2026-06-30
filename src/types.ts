@@ -19,4 +19,12 @@ export interface ParticipantData {
   challenge: string;
   income?: string;
   registeredAt: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  utm_id?: string;
+  fbclid?: string;
+  gclid?: string;
 }

@@ -2,6 +2,7 @@ import { useState, useEffect, startTransition } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, ArrowRight, Calendar, MessageCircle, AlertCircle, Sparkles } from 'lucide-react';
 import { ParticipantData } from '../types';
+import { getStoredUtms } from '../lib/utm';
 import { sendToGoogleSheet } from '../lib/google-sheet';
 import { trackCompleteRegistration, trackContact, trackLeadStep1, updatePixelUserData } from '../lib/meta-tracking';
 
@@ -112,6 +113,7 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
       if (validateStep2()) {
         const participant: ParticipantData = {
           ...formData,
+          ...getStoredUtms(),
           registeredAt: new Date().toISOString(),
         };
         
