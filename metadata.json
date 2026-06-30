@@ -1,6 +1,6 @@
 {
-  "name": "Conecta Storywork PG Captura",
-  "description": "Landing page exclusiva do evento Conecta Storywork com Sthefanny Loredo. Aprenda a fazer conexões profissionais autênticas, gerar oportunidades reais e vender sem precisar viralizar.",
+  "name": "Conexão Além da Tela PG Captura",
+  "description": "Landing page exclusiva do evento Conexão Além da Tela com Sthefanny Loredo. Aprenda a fazer conexões profissionais autênticas, gerar oportunidades reais e vender sem precisar viralizar.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

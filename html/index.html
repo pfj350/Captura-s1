@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conecta Storywork — por Sthefanny Loredo</title>
+    <title>Conexão Além da Tela — por Sthefanny Loredo</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,9 +69,6 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                 </svg>
                 <span>Você é VIP! Inscrição confirmada para 8 de Julho.</span>
-                <span class="bg-[#0d1b3d]/10 px-1.5 py-0.5 rounded font-mono text-[9.5px] xs:text-[11px] text-[#0d1b3d]">
-                    Cód: <strong id="vip-badge-code" class="font-extrabold">SW-XXXXX</strong>
-                </span>
             </div>
             
             <div class="flex items-center gap-2 text-[9.5px] xs:text-xs">
@@ -181,7 +178,7 @@
                 </div>
 
                 <!-- Float values bar matching stats -->
-                <div id="hero-indicators-bar" class="flex items-center gap-4 sm:gap-6 md:gap-10 border-t border-[#b8964c]/40 pt-5 sm:pt-6 max-w-sm">
+                <div id="hero-indicators-bar" class="flex flex-wrap items-center gap-4 sm:gap-6 md:gap-10 border-t border-[#b8964c]/40 pt-5 sm:pt-6 max-w-xl">
                     <div class="flex items-center gap-2.5 sm:gap-3">
                         <div class="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-[#d9c8a9] flex items-center justify-center text-[#0d1b3d] shrink-0">
                             <svg class="h-4 w-4 sm:h-4.5 sm:w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -195,6 +192,22 @@
                             </span>
                             <span class="text-[8.5px] sm:text-[9.5px] uppercase font-bold tracking-widest text-[#f3ede2]/70 block leading-none">
                                 DATA DO EVENTO
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2.5 sm:gap-3">
+                        <div class="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-[#d9c8a9] flex items-center justify-center text-[#0d1b3d] shrink-0">
+                            <svg class="h-4 w-4 sm:h-4.5 sm:w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-xs sm:text-sm md:text-base font-bold text-white block leading-tight">
+                                Evento 100% gratuito e Online
+                            </span>
+                            <span class="text-[8.5px] sm:text-[9.5px] uppercase font-bold tracking-widest text-[#f3ede2]/70 block leading-none">
+                                FORMATO
                             </span>
                         </div>
                     </div>
@@ -227,7 +240,7 @@
                             />
                             <text class="text-[9.5px] sm:text-[10px] font-medium tracking-widest uppercase fill-[#d9c8a9]">
                                 <textPath href="#badgeCurve" startOffset="0%">
-                                    • CONECTA • COMUNIDADE • STORYWORK •{" "}
+                                    • CONEXÃO • ALÉM • DA TELA •{" "}
                                 </textPath>
                             </text>
                         </svg>
@@ -252,7 +265,11 @@
                     </div>
 
                     <!-- FLOATING ITEM 3: Stamp Badge at the bottom left -->
-                    <div class="absolute bottom-4 -left-3 sm:bottom-6 sm:-left-8 bg-[#0d1b3d]/95 backdrop-blur-md px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl shadow-lg border border-[#b8964c] flex items-center gap-1.5 text-white transition-all hover:scale-105">
+                    <div class="absolute bottom-4 -left-3 sm:bottom-6 sm:-left-8 bg-[#0d1b3d]/95 backdrop-blur-md px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl shadow-lg border border-[#b8964c] flex flex-col gap-1.5 text-white transition-all hover:scale-105">
+                        <span class="text-[8px] sm:text-[9.5px] font-semibold uppercase tracking-wider text-[#d9c8a9] text-center leading-tight px-0.5">
+                            minha experiência profissional
+                        </span>
+                        <div class="flex items-center gap-1.5">
                         <div class="flex items-center gap-1 bg-white/5 hover:bg-white/10 px-1.5 py-0.5 sm:py-1 rounded-md text-[7.5px] sm:text-[9px] font-bold text-[#f3ede2] border border-white/10 transition-colors">
                             <img src="/images/logos/globo.svg" alt="TV Globo" class="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain shrink-0" />
                             <span>GLOBO</span>
@@ -264,6 +281,7 @@
                         <div class="flex items-center gap-1 bg-white/5 hover:bg-white/10 px-1.5 py-0.5 sm:py-1 rounded-md text-[7.5px] sm:text-[9px] font-bold text-[#f3ede2] border border-white/10 transition-colors">
                             <img src="/images/logos/band.svg" alt="Band" class="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain shrink-0" />
                             <span>BAND</span>
+                        </div>
                         </div>
                     </div>
 
@@ -507,7 +525,7 @@
                         Para quem este evento é <span class="font-serif italic font-medium text-[#d9c8a9]">recomendado?</span>
                     </h2>
                     <p class="text-[#f3ede2]/80 text-xs sm:text-sm md:text-base leading-relaxed">
-                        O Conecta Storywork é um evento para profissionais que desejam transformar sua comunicação em autoridade, reconhecimento e crescimento financeiro. Um encontro para quem quer atrair mais clientes, ser valorizado pelo mercado e construir uma presença digital autêntica.
+                        O Conexão Além da Tela é um evento para profissionais que desejam transformar sua comunicação em autoridade, reconhecimento e crescimento financeiro. Um encontro para quem quer atrair mais clientes, ser valorizado pelo mercado e construir uma presença digital autêntica.
                     </p>
 
                     <!-- Quick info badges grid -->
@@ -730,13 +748,13 @@
                         <div class="faq-item rounded-2xl border border-white/10 bg-[#132247] shadow-sm overflow-hidden" data-id="q-1">
                             <button onclick="toggleFaq('q-1')" class="w-full flex justify-between items-center py-3.5 px-4 sm:py-4 sm:px-6 text-left group transition-all">
                                 <span class="text-xs sm:text-sm md:text-base font-semibold text-white group-hover:text-[#d9c8a9] transition-colors pr-2">
-                                    O que é o Conecta Storywork e qual é a sua principal promessa?
+                                    O que é o Conexão Além da Tela e qual é a sua principal promessa?
                                 </span>
                                 <svg class="faq-arrow h-4.5 w-4.5 text-[#f3ede2]/60 shrink-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                             </button>
                             <div class="faq-content overflow-hidden transition-all duration-300 max-h-0">
                                 <p class="pb-4 pt-0.5 px-4 sm:pb-5 sm:pt-1 sm:px-6 text-[11px] sm:text-xs md:text-sm text-[#f3ede2]/75 leading-relaxed">
-                                    O Conecta Storywork é um evento digital inédito, ao vivo e gratuito, desenhado para especialistas, líderes e profissionais liberais. A sua principal promessa é sobre CRIAR CONEXÃO real e magnética com as pessoas certas. Você aprenderá a estruturar sua comunicação utilizando princípios de narrativa da TV e do streaming, para atrair, engajar e, principalmente, se conectar com o público que valoriza o seu trabalho, gerando autoridade e retorno financeiro sem depender de algoritmos ou dancinhas.
+                                    O Conexão Além da Tela é um evento digital inédito, ao vivo e gratuito, desenhado para especialistas, líderes e profissionais liberais. A sua principal promessa é sobre CRIAR CONEXÃO real e magnética com as pessoas certas. Você aprenderá a estruturar sua comunicação utilizando princípios de narrativa da TV e do streaming, para atrair, engajar e, principalmente, se conectar com o público que valoriza o seu trabalho, gerando autoridade e retorno financeiro sem depender de algoritmos ou dancinhas.
                                 </p>
                             </div>
                         </div>
@@ -751,7 +769,7 @@
                             </button>
                             <div class="faq-content overflow-hidden transition-all duration-300 max-h-0">
                                 <p class="pb-4 pt-0.5 px-4 sm:pb-5 sm:pt-1 sm:px-6 text-[11px] sm:text-xs md:text-sm text-[#f3ede2]/75 leading-relaxed">
-                                    De forma alguma. O foco do Conecta Storywork é justamente lapidar e profissionalizar a sua comunicação atual. Você não precisa ter milhares de seguidores ou ser um apresentador profissional. Pelo contrário: aprenderá a se expressar com verdade e estratégia para atrair as pessoas certas (clientes de alto valor) que valorizam a profundidade e a seriedade do seu trabalho, independentemente do tamanho atual da sua audiência.
+                                    De forma alguma. O foco do Conexão Além da Tela é justamente lapidar e profissionalizar a sua comunicação atual. Você não precisa ter milhares de seguidores ou ser um apresentador profissional. Pelo contrário: aprenderá a se expressar com verdade e estratégia para atrair as pessoas certas (clientes de alto valor) que valorizam a profundidade e a seriedade do seu trabalho, independentemente do tamanho atual da sua audiência.
                                 </p>
                             </div>
                         </div>
@@ -781,7 +799,7 @@
                             </button>
                             <div class="faq-content overflow-hidden transition-all duration-300 max-h-0">
                                 <p class="pb-4 pt-0.5 px-4 sm:pb-5 sm:pt-1 sm:px-6 text-[11px] sm:text-xs md:text-sm text-[#f3ede2]/75 leading-relaxed">
-                                    O Conecta Storywork será transmitido no dia 8 de Julho (quarta-feira) às 20:30 (Horário de Brasília). A transmissão é exclusiva e fechada para inscritos. Assim que preencher o formulário nesta página, você receberá a confirmação por e-mail e terá acesso direto ao nosso Grupo VIP do WhatsApp, onde enviaremos o link oficial de acesso à sala, materiais complementares e avisos cruciais.
+                                    O Conexão Além da Tela será transmitido no dia 8 de Julho (quarta-feira) às 20:30 (Horário de Brasília). A transmissão é exclusiva e fechada para inscritos. Assim que preencher o formulário nesta página, você receberá a confirmação por e-mail e terá acesso direto ao nosso Grupo VIP do WhatsApp, onde enviaremos o link oficial de acesso à sala, materiais complementares e avisos cruciais.
                                 </p>
                             </div>
                         </div>
@@ -796,7 +814,7 @@
                             </button>
                             <div class="faq-content overflow-hidden transition-all duration-300 max-h-0">
                                 <p class="pb-4 pt-0.5 px-4 sm:pb-5 sm:pt-1 sm:px-6 text-[11px] sm:text-xs md:text-sm text-[#f3ede2]/75 leading-relaxed">
-                                    Não há garantia de gravação disponível. O Conecta Storywork foi desenhado para ser uma experiência imersiva e interativa ao vivo. A energia do encontro em tempo real, os insights práticos compartilhados no momento e o networking exclusivo do chat fazem toda a diferença para o seu aprendizado. Por isso, sugerimos fortemente que reserve a data na sua agenda imediatamente após concluir sua inscrição.
+                                    Não há garantia de gravação disponível. O Conexão Além da Tela foi desenhado para ser uma experiência imersiva e interativa ao vivo. A energia do encontro em tempo real, os insights práticos compartilhados no momento e o networking exclusivo do chat fazem toda a diferença para o seu aprendizado. Por isso, sugerimos fortemente que reserve a data na sua agenda imediatamente após concluir sua inscrição.
                                 </p>
                             </div>
                         </div>
@@ -829,7 +847,7 @@
 
                         <div class="mt-6 sm:mt-8">
                             <a
-                                href="https://wa.me/5561982360909?text=Ola!%20Tenho%20duvidas%20sobre%20o%20evento%20Conecta%20Storywork"
+                                href="https://wa.me/5561995820229?text=Ola!%20Tenho%20duvidas%20sobre%20o%20evento%20Conexao%20Alem%20da%20Tela"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-white py-3 sm:py-3.5 px-6 font-bold text-xs sm:text-sm transition-all duration-200 shadow-md hover:scale-[1.02] active:scale-[0.98]"
@@ -1032,7 +1050,7 @@
                         Só mais um detalhe...
                     </h3>
                     <p class="mt-0.5 text-[10px] sm:text-xs text-[#f3ede2]/75 leading-relaxed">
-                        Queremos personalizar sua experiência no Conecta Storywork.
+                        Queremos personalizar sua experiência no Conexão Além da Tela.
                     </p>
                 </div>
 
@@ -1139,7 +1157,7 @@
                     <!-- Ticket Header -->
                     <div class="bg-[#d9c8a9] px-4 py-2.5 sm:px-5 sm:py-3 text-[#0d1b3d] flex justify-between items-center">
                         <span class="font-serif italic font-semibold text-xs sm:text-sm text-[#0d1b3d]">
-                            Conecta <span class="font-sans not-italic text-[#0d1b3d] text-[9px] font-black tracking-widest pl-0.5 uppercase">Storywork</span>
+                            Conexão <span class="font-sans not-italic text-[#0d1b3d] text-[9px] font-black tracking-widest pl-0.5 uppercase">Além da Tela</span>
                         </span>
                         <span class="text-[7.5px] sm:text-[9.5px] font-extrabold tracking-widest uppercase text-[#0d1b3d]/80 bg-[#0d1b3d]/10 px-2 py-0.5 rounded">
                             INGRESSO VIP
@@ -1176,56 +1194,13 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-3 sm:gap-4 border-t border-white/5 pt-2.5 sm:pt-3">
-                            <div>
-                                <span class="text-[8px] sm:text-[10px] font-semibold text-[#f3ede2]/50 uppercase tracking-wider">
-                                    Código de Identificação
-                                </span>
-                                <div id="ticket-code-display" class="text-[10.5px] sm:text-xs font-mono font-bold text-[#d9c8a9]">
-                                    SW-A3F8B
-                                </div>
-                            </div>
-                            <div>
-                                <span class="text-[8px] sm:text-[10px] font-semibold text-[#f3ede2]/50 uppercase tracking-wider">
-                                    Formato
-                                </span>
-                                <div class="text-[10.5px] sm:text-xs font-bold text-white">
-                                    Transmissão Online
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Barcode Section -->
-                        <div class="relative border-t border-dashed border-white/10 pt-3.5 sm:pt-4 flex flex-col items-center justify-center opacity-75 -mx-4 sm:-mx-5 px-4 sm:px-5">
-                            <!-- Coupon cutouts -->
-                            <div class="absolute left-0 top-0 -mt-2 -ml-2 h-4 w-4 bg-[#0d1b3d] rounded-full border-r border-[#d9c8a9]/25"></div>
-                            <div class="absolute right-0 top-0 -mt-2 -mr-2 h-4 w-4 bg-[#0d1b3d] rounded-full border-l border-[#d9c8a9]/25"></div>
-
-                            <!-- Fake barcode styling -->
-                            <div class="flex gap-0.5 h-5 sm:h-6 w-full max-w-[240px] bg-white/5 items-center justify-center">
-                                <div class="h-full bg-white/60 w-1 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-3 opacity-0"></div>
-                                <div class="h-full bg-white/60 w-2 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-1 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-4 opacity-0"></div>
-                                <div class="h-full bg-white/60 w-3 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-1 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-2 opacity-0"></div>
-                                <div class="h-full bg-white/60 w-2 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-3 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-1 opacity-0"></div>
-                                <div class="h-full bg-white/60 w-4 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-1 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-3 opacity-0"></div>
-                                <div class="h-full bg-white/60 w-2 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-2 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-1 opacity-0"></div>
-                                <div class="h-full bg-white/60 w-3 opacity-70"></div>
-                                <div class="h-full bg-white/60 w-1 opacity-70"></div>
-                            </div>
-                            <span class="text-[7.5px] sm:text-[8px] font-mono tracking-widest text-[#f3ede2]/40 mt-1 text-center">
-                                * APRESENTE ESTE CÓDIGO NO DIA DO EVENTO *
+                        <div class="border-t border-white/5 pt-2.5 sm:pt-3">
+                            <span class="text-[8px] sm:text-[10px] font-semibold text-[#f3ede2]/50 uppercase tracking-wider">
+                                Formato
                             </span>
+                            <div class="text-[10.5px] sm:text-xs font-bold text-white">
+                                Transmissão Online
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1238,7 +1213,7 @@
 
                     <a
                         id="join-vip-whatsapp"
-                        href="https://wa.me/5561982360909?text=Quero%20entrar%20no%20grupo%20vip%20do%20Conecta%20Storywork"
+                        href="https://chat.whatsapp.com/EtdAs7qSeKq6Om6glUNQs5"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white py-3 px-4 font-bold text-xs sm:text-sm transition-all duration-200 shadow-md hover:scale-[1.02] active:scale-[0.98] animate-pulse"
@@ -1426,7 +1401,6 @@
                 // Bind values to ticket
                 if (participantData) {
                     document.getElementById('ticket-name-display').innerText = participantData.name;
-                    document.getElementById('ticket-code-display').innerText = participantData.registrationId;
                 }
             }
         }
@@ -1498,10 +1472,6 @@
                 document.getElementById('error-profession').classList.add('hidden');
             }
 
-            // Generate temporary unique registration ID
-            const randomCode = Math.floor(10000 + Math.random() * 90000);
-            const registrationId = `SW-${randomCode}`;
-
             participantData = {
                 name,
                 email,
@@ -1509,7 +1479,6 @@
                 profession,
                 challenge,
                 income,
-                registrationId,
                 registeredAt: new Date().toISOString()
             };
 
@@ -1541,7 +1510,6 @@
         function showVipStatusBanner() {
             if (participantData) {
                 document.getElementById('vip-status-header').classList.remove('hidden');
-                document.getElementById('vip-badge-code').innerText = participantData.registrationId;
                 
                 // Update bottom footer text to ticket option
                 document.getElementById('fixed-bottom-cta-text').innerText = 'VER INGRESSO';

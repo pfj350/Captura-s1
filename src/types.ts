@@ -19,5 +19,4 @@ export interface ParticipantData {
   challenge: string;
   income?: string;
   registeredAt: string;
-  registrationId: string;
 }

@@ -110,11 +110,9 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
       }
     } else if (step === 2) {
       if (validateStep2()) {
-        const generatedId = `SW-${Math.floor(100000 + Math.random() * 900000)}`;
         const participant: ParticipantData = {
           ...formData,
           registeredAt: new Date().toISOString(),
-          registrationId: generatedId
         };
         
         localStorage.setItem('storywork_participant', JSON.stringify(participant));
@@ -143,7 +141,7 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
   };
 
   const handleGoogleCalendar = () => {
-    const title = encodeURIComponent('Conecta Storywork com Sthefanny Loredo');
+    const title = encodeURIComponent('Conexão Além da Tela com Sthefanny Loredo');
     const details = encodeURIComponent('Evento exclusivo para aprender a fazer conexões profissionais autênticas, gerar oportunidades reais e vender sem precisar viralizar.');
     const dates = '20260708T233000Z/20260709T013000Z'; // 08 July 2026 20:30 - 22:30 BRT (UTC-3 is 23:30 UTC)
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&dates=${dates}`;
@@ -288,7 +286,7 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
                       Só mais um detalhe...
                     </h3>
                     <p className="mt-0.5 text-[10px] sm:text-xs text-[#f3ede2]/75 leading-relaxed">
-                      Queremos personalizar sua experiência no Conecta Storywork.
+                      Queremos personalizar sua experiência no Conexão Além da Tela.
                     </p>
                   </div>
 
@@ -426,7 +424,7 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
                     {/* Header Strip */}
                     <div className="bg-brand-accent px-4 py-2.5 sm:px-5 sm:py-3 text-[#0d1b3d] flex justify-between items-center">
                       <span className="font-serif italic font-semibold text-xs sm:text-sm text-[#0d1b3d]">
-                        Conecta <span className="font-sans not-italic text-[#0d1b3d] text-[9px] font-black tracking-widest pl-0.5 uppercase">Storywork</span>
+                        Conexão <span className="font-sans not-italic text-[#0d1b3d] text-[9px] font-black tracking-widest pl-0.5 uppercase">Além da Tela</span>
                       </span>
                       <span className="text-[7.5px] sm:text-[9.5px] font-extrabold tracking-widest uppercase text-[#0d1b3d]/80 bg-[#0d1b3d]/10 px-2 py-0.5 rounded">
                         INGRESSO VIP
@@ -463,50 +461,13 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3 sm:gap-4 border-t border-brand-card-border/30 pt-2.5 sm:pt-3">
-                        <div>
-                          <span className="text-[8px] sm:text-[10px] font-semibold text-[#f3ede2]/50 uppercase tracking-wider">
-                            Código de Identificação
-                          </span>
-                          <div className="text-[10.5px] sm:text-xs font-mono font-bold text-brand-accent">
-                            {formData.phone ? `SW-${Math.abs(formData.name.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)).toString(36).toUpperCase().substring(0, 5)}` : 'SW-VIP26'}
-                          </div>
-                        </div>
-                        <div>
-                          <span className="text-[8px] sm:text-[10px] font-semibold text-[#f3ede2]/50 uppercase tracking-wider">
-                            Formato
-                          </span>
-                          <div className="text-[10.5px] sm:text-xs font-bold text-white">
-                            Transmissão Online
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Barcode Visual Representation */}
-                      <div className="relative border-t border-dashed border-brand-card-border/30 pt-3.5 sm:pt-4 flex flex-col items-center justify-center opacity-75 -mx-4 sm:-mx-5 px-4 sm:px-5">
-                        {/* Cutout circles strictly reproducing physical ticket coupons, positioned relative to this dashed container */}
-                        <div className="absolute left-0 top-0 -mt-2 -ml-2 h-4 w-4 bg-[#0d1b3d] rounded-full border-r border-brand-accent/25" />
-                        <div className="absolute right-0 top-0 -mt-2 -mr-2 h-4 w-4 bg-[#0d1b3d] rounded-full border-l border-brand-accent/25" />
-
-                        <div className="flex gap-0.5 h-5 sm:h-6 w-full max-w-[240px] bg-white/5">
-                          {Array.from({ length: 32 }).map((_, idx) => {
-                            const widths = [1, 2, 3, 4, 1, 3, 2];
-                            const w = widths[idx % widths.length];
-                            return (
-                              <div
-                                key={idx}
-                                className="h-full bg-white/70"
-                                style={{
-                                  width: `${w}px`,
-                                  opacity: idx % 3 === 0 ? 0 : 0.85
-                                }}
-                              />
-                            );
-                          })}
-                        </div>
-                        <span className="text-[7.5px] sm:text-[8px] font-mono tracking-widest text-[#f3ede2]/40 mt-1 text-center">
-                          * APRESENTE ESTE CÓDIGO NO DIA DO EVENTO *
+                      <div className="border-t border-brand-card-border/30 pt-2.5 sm:pt-3">
+                        <span className="text-[8px] sm:text-[10px] font-semibold text-[#f3ede2]/50 uppercase tracking-wider">
+                          Formato
                         </span>
+                        <div className="text-[10.5px] sm:text-xs font-bold text-white">
+                          Transmissão Online
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -519,7 +480,7 @@ export default function EnrollmentModal({ isOpen, onClose, onSuccess }: Enrollme
 
                     <a
                       id="join-vip-whatsapp"
-                      href="https://wa.me/5561982360909?text=Quero%20entrar%20no%20grupo%20vip%20do%20Conecta%20Storywork"
+                      href="https://chat.whatsapp.com/EtdAs7qSeKq6Om6glUNQs5"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => {

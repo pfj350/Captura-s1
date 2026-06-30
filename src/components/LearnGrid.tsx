@@ -1,4 +1,3 @@
-import { motion } from 'motion/react';
 import { MessageCircle, User, Heart, Sparkles } from 'lucide-react';
 
 export default function LearnGrid() {
@@ -72,13 +71,10 @@ export default function LearnGrid() {
             {cards.map((card, idx) => {
               const IconComp = card.icon;
               return (
-                <motion.div
+                <div
                   key={card.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: idx * 0.08 }}
-                  className="rounded-[24px] sm:rounded-3xl border border-brand-card-border/80 bg-[#132247]/80 backdrop-blur-sm p-5 sm:p-7 md:p-8 flex flex-col justify-between hover:bg-[#132247] hover:border-brand-accent/40 hover:shadow-md transition-all duration-300"
+                  style={{ animationDelay: `${idx * 80}ms` }}
+                  className="rounded-[24px] sm:rounded-3xl border border-brand-card-border/80 bg-[#132247]/80 backdrop-blur-sm p-5 sm:p-7 md:p-8 flex flex-col justify-between hover:bg-[#132247] hover:border-brand-accent/40 hover:shadow-md transition-all duration-300 animate-fade-in-up"
                 >
                   <div className="space-y-3 sm:space-y-4">
                     {/* Icon container - clean round shape similar to image 2 */}
@@ -95,7 +91,7 @@ export default function LearnGrid() {
                       </p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>

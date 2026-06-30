@@ -9,7 +9,7 @@ declare global {
 }
 
 const PIXEL_ID = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
-const CONTENT_NAME = 'Conecta Storywork';
+const CONTENT_NAME = 'Conexão Além da Tela';
 
 export interface MetaUserData {
   email?: string;
@@ -235,7 +235,7 @@ export function trackCompleteRegistration(data: ParticipantData): void {
       email: data.email,
       phone: data.phone,
       name: data.name,
-      externalId: data.registrationId,
+      externalId: data.email,
       country: 'br',
     },
     customData: {
@@ -245,7 +245,6 @@ export function trackCompleteRegistration(data: ParticipantData): void {
       profession: data.profession,
       challenge: data.challenge,
       income: data.income,
-      registration_id: data.registrationId,
       currency: 'BRL',
       value: 0,
     },
@@ -256,7 +255,7 @@ export function trackCompleteRegistration(data: ParticipantData): void {
       email: data.email,
       phone: data.phone,
       name: data.name,
-      externalId: data.registrationId,
+      externalId: data.email,
       country: 'br',
     },
     customData: {
@@ -266,7 +265,6 @@ export function trackCompleteRegistration(data: ParticipantData): void {
       profession: data.profession,
       challenge: data.challenge,
       income: data.income,
-      registration_id: data.registrationId,
     },
   });
 }
@@ -278,7 +276,7 @@ export function trackContact(participant?: ParticipantData | null): void {
           email: participant.email,
           phone: participant.phone,
           name: participant.name,
-          externalId: participant.registrationId,
+          externalId: participant.email,
           country: 'br',
         }
       : undefined,

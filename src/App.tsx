@@ -1,5 +1,4 @@
-import { useState, useEffect, startTransition } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, startTransition, lazy, Suspense } from 'react';
 import {
   Calendar,
   Clock,
@@ -8,19 +7,18 @@ import {
   Check,
   Sparkles,
   MessageCircle,
-  ShieldCheck,
   UserCheck,
-  ArrowRight,
   ChevronRight,
   Award,
   BookOpen,
   Mic
 } from 'lucide-react';
 import { ParticipantData } from './types';
-import EnrollmentModal from './components/EnrollmentModal';
-import LearnGrid from './components/LearnGrid';
-import FAQSection from './components/FAQSection';
 import { initMetaTracking, trackCtaClick, trackInitiateCheckout } from './lib/meta-tracking';
+
+const LearnGrid = lazy(() => import('./components/LearnGrid'));
+const FAQSection = lazy(() => import('./components/FAQSection'));
+const EnrollmentModal = lazy(() => import('./components/EnrollmentModal'));
 
 const CAROUSEL_IMAGES = [
   {
@@ -58,6 +56,7 @@ const CAROUSEL_IMAGES = [
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [shouldLoadModal, setShouldLoadModal] = useState<boolean>(false);
   const [participant, setParticipant] = useState<ParticipantData | null>(null);
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
 
@@ -69,15 +68,35 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    void initMetaTracking();
+    const preloadCarousel = () => {
+      CAROUSEL_IMAGES.forEach((image) => {
+        const img = new Image();
+        img.src = image.src;
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(preloadCarousel);
+    } else {
+      setTimeout(preloadCarousel, 2000);
+    }
   }, []);
 
   useEffect(() => {
-    // Check if user is already registered in local session
+    const runTracking = () => void initMetaTracking();
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(runTracking);
+    } else {
+      setTimeout(runTracking, 2000);
+    }
+  }, []);
+
+  useEffect(() => {
     const saved = localStorage.getItem('storywork_participant');
     if (saved) {
       try {
         setParticipant(JSON.parse(saved));
+        setShouldLoadModal(true);
       } catch (e) {
         console.error('Falha ao parsear participante', e);
       }
@@ -95,6 +114,7 @@ export default function App() {
   };
 
   const openRegisterModal = (location = 'cta') => {
+    setShouldLoadModal(true);
     trackInitiateCheckout();
     trackCtaClick(location);
     setIsModalOpen(true);
@@ -110,9 +130,6 @@ export default function App() {
             <div className="flex items-center justify-center gap-1.5 flex-wrap">
               <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-pulse text-[#0d1b3d] shrink-0" />
               <span>Você é VIP! Inscrição confirmada para 8 de Julho.</span>
-              <span className="bg-[#0d1b3d]/10 px-1.5 py-0.5 rounded font-mono text-[9.5px] xs:text-[11px] text-[#0d1b3d]">
-                Cód: <strong className="font-extrabold">{participant.registrationId}</strong>
-              </span>
             </div>
             
             <div className="flex items-center gap-2 text-[9.5px] xs:text-xs">
@@ -149,6 +166,8 @@ export default function App() {
               alt="Conexão Além da Tela"
               width={520}
               height={277}
+              decoding="async"
+              fetchPriority="high"
               className="h-14 xs:h-16 sm:h-[4.5rem] md:h-20 lg:h-24 w-auto object-contain object-left transition-opacity group-hover:opacity-90"
             />
             <span className="text-[7px] sm:text-[9.5px] uppercase font-bold tracking-widest text-[#f3ede2]/80 leading-none mt-0.5 sm:mt-1 hidden xs:block">
@@ -228,7 +247,7 @@ export default function App() {
             </div>
 
             {/* Float values bar matching stats in image 1 */}
-            <div id="hero-indicators-bar" className="flex items-center gap-4 sm:gap-6 md:gap-10 border-t border-[#b8964c]/40 pt-5 sm:pt-6 max-w-sm">
+            <div id="hero-indicators-bar" className="flex flex-wrap items-center gap-4 sm:gap-6 md:gap-10 border-t border-[#b8964c]/40 pt-5 sm:pt-6 max-w-xl">
               <div className="flex items-center gap-2.5 sm:gap-3">
                 <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-[#d9c8a9] flex items-center justify-center text-[#0d1b3d] shrink-0">
                   <Clock className="h-4 w-4 sm:h-4.5 sm:w-4.5 stroke-[1.8]" />
@@ -239,6 +258,20 @@ export default function App() {
                   </span>
                   <span className="text-[8.5px] sm:text-[9.5px] uppercase font-bold tracking-widest text-[#f3ede2]/70 block leading-none">
                     DATA DO EVENTO
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-[#d9c8a9] flex items-center justify-center text-[#0d1b3d] shrink-0">
+                  <Sparkles className="h-4 w-4 sm:h-4.5 sm:w-4.5 stroke-[1.8]" />
+                </div>
+                <div>
+                  <span className="text-xs sm:text-sm md:text-base font-bold text-white block leading-tight">
+                    Evento 100% gratuito e Online
+                  </span>
+                  <span className="text-[8.5px] sm:text-[9.5px] uppercase font-bold tracking-widest text-[#f3ede2]/70 block leading-none">
+                    FORMATO
                   </span>
                 </div>
               </div>
@@ -257,7 +290,10 @@ export default function App() {
                 <img
                   src="/images/sthefanny-hero.webp"
                   alt="Sthefanny Loredo"
-                  referrerPolicy="no-referrer"
+                  width={340}
+                  height={425}
+                  decoding="async"
+                  fetchPriority="high"
                   className="h-full w-full object-cover object-center"
                 />
               </div>
@@ -272,7 +308,7 @@ export default function App() {
                   />
                   <text className="text-[9.5px] sm:text-[10px] font-medium tracking-widest uppercase fill-[#d9c8a9]">
                     <textPath href="#badgeCurve" startOffset="0%">
-                      • CONECTA • COMUNIDADE • STORYWORK •{" "}
+                      • CONEXÃO • ALÉM • DA TELA •{" "}
                     </textPath>
                   </text>
                 </svg>
@@ -280,7 +316,9 @@ export default function App() {
                   <img
                     src="/images/loredo-symbol.png"
                     alt="Símbolo Loredo Storywork"
-                    referrerPolicy="no-referrer"
+                    width={64}
+                    height={64}
+                    decoding="async"
                     className="h-full w-full object-contain p-1.5 sm:p-2"
                   />
                 </div>
@@ -295,12 +333,19 @@ export default function App() {
               </div>
 
               {/* FLOATING ITEM 3: Stamp Badge at the bottom left */}
-              <div className="absolute bottom-4 -left-3 sm:bottom-6 sm:-left-8 bg-[#0d1b3d]/95 backdrop-blur-md px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl shadow-lg border border-[#b8964c] flex items-center gap-1.5 text-white transition-all hover:scale-105">
+              <div className="absolute bottom-4 -left-3 sm:bottom-6 sm:-left-8 bg-[#0d1b3d]/95 backdrop-blur-md px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl shadow-lg border border-[#b8964c] flex flex-col gap-1.5 text-white transition-all hover:scale-105">
+                <span className="text-[8px] sm:text-[9.5px] font-semibold uppercase tracking-wider text-[#d9c8a9] text-center leading-tight px-0.5">
+                  minha experiência profissional
+                </span>
+                <div className="flex items-center gap-1.5">
                 {/* Globo Logo */}
                 <div className="flex items-center gap-1 bg-white/5 hover:bg-white/10 px-1.5 py-0.5 sm:py-1 rounded-md text-[7.5px] sm:text-[9px] font-bold text-[#f3ede2] border border-white/10 transition-colors">
                   <img
                     src="/images/logos/globo.svg"
                     alt="TV Globo"
+                    width={16}
+                    height={16}
+                    decoding="async"
                     className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain shrink-0"
                   />
                   <span>GLOBO</span>
@@ -310,6 +355,9 @@ export default function App() {
                   <img
                     src="/images/logos/sbt.svg"
                     alt="SBT"
+                    width={16}
+                    height={16}
+                    decoding="async"
                     className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain shrink-0"
                   />
                   <span>SBT</span>
@@ -319,9 +367,13 @@ export default function App() {
                   <img
                     src="/images/logos/band.svg"
                     alt="Band"
+                    width={16}
+                    height={16}
+                    decoding="async"
                     className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain shrink-0"
                   />
                   <span>BAND</span>
+                </div>
                 </div>
               </div>
 
@@ -426,7 +478,9 @@ export default function App() {
       </section>
 
       {/* METHODOLOGY SECTION (LearnGrid) */}
-      <LearnGrid />
+      <Suspense fallback={null}>
+        <LearnGrid />
+      </Suspense>
 
       {/* SECTION 4: PARA QUEM É O EVENTO? - Styled precisely like Elisa's layout */}
       <section id="audience-section" className="py-14 sm:py-24 bg-brand-bg border-t border-[#b8964c]">
@@ -442,7 +496,7 @@ export default function App() {
                 Para quem este evento é <span className="font-serif italic font-medium text-[#d9c8a9]">recomendado?</span>
               </h2>
               <p className="text-[#f3ede2]/80 text-xs sm:text-sm md:text-base leading-relaxed">
-                O Conecta Storywork é um evento para profissionais que desejam transformar sua comunicação em autoridade, reconhecimento e crescimento financeiro. Um encontro para quem quer atrair mais clientes, ser valorizado pelo mercado e construir uma presença digital autêntica.
+                O Conexão Além da Tela é um evento para profissionais que desejam transformar sua comunicação em autoridade, reconhecimento e crescimento financeiro. Um encontro para quem quer atrair mais clientes, ser valorizado pelo mercado e construir uma presença digital autêntica.
               </p>
 
               {/* Quick info badges */}
@@ -570,7 +624,10 @@ export default function App() {
                   <img
                     src="/images/speaker/sthefanny-portrait.webp"
                     alt="Sthefanny Loredo no Fantástico"
-                    referrerPolicy="no-referrer"
+                    width={400}
+                    height={436}
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     style={{ objectPosition: '38% center' }}
                   />
@@ -585,64 +642,46 @@ export default function App() {
                 {/* Slot 1 */}
                 <div className="relative aspect-[4/3] rounded-2xl bg-[#132247] border border-[#b8964c]/50 p-1.5 shadow-sm hover:border-[#b8964c] transition-all overflow-hidden group">
                   <div className="relative h-full w-full overflow-hidden rounded-xl bg-[#132247]">
-                    <AnimatePresence mode="wait">
-                      <motion.img
-                        key={CAROUSEL_IMAGES[carouselIndex].src}
-                        src={CAROUSEL_IMAGES[carouselIndex].src}
-                        alt={CAROUSEL_IMAGES[carouselIndex].alt}
-                        referrerPolicy="no-referrer"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 1.05 }}
-                        transition={{ duration: 0.6, ease: "easeInOut" }}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        style={{ objectPosition: CAROUSEL_IMAGES[carouselIndex].objectPosition ?? 'center' }}
-                      />
-                    </AnimatePresence>
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={CAROUSEL_IMAGES[carouselIndex].label}
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -5 }}
-                        transition={{ duration: 0.4 }}
-                        className="absolute bottom-1.5 left-1.5 bg-[#0d1b3d]/95 backdrop-blur-sm px-2 py-0.5 rounded text-[8px] font-bold text-[#f3ede2]/90 tracking-wide border border-white/5"
-                      >
-                        {CAROUSEL_IMAGES[carouselIndex].label}
-                      </motion.div>
-                    </AnimatePresence>
+                    <img
+                      key={CAROUSEL_IMAGES[carouselIndex].src}
+                      src={CAROUSEL_IMAGES[carouselIndex].src}
+                      alt={CAROUSEL_IMAGES[carouselIndex].alt}
+                      width={320}
+                      height={240}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 animate-carousel-fade-in"
+                      style={{ objectPosition: CAROUSEL_IMAGES[carouselIndex].objectPosition ?? 'center' }}
+                    />
+                    <div
+                      key={CAROUSEL_IMAGES[carouselIndex].label}
+                      className="absolute bottom-1.5 left-1.5 bg-[#0d1b3d]/95 backdrop-blur-sm px-2 py-0.5 rounded text-[8px] font-bold text-[#f3ede2]/90 tracking-wide border border-white/5 animate-carousel-fade-in"
+                    >
+                      {CAROUSEL_IMAGES[carouselIndex].label}
+                    </div>
                   </div>
                 </div>
 
                 {/* Slot 2 */}
                 <div className="relative aspect-[4/3] rounded-2xl bg-[#132247] border border-[#b8964c]/50 p-1.5 shadow-sm hover:border-[#b8964c] transition-all overflow-hidden group">
                   <div className="relative h-full w-full overflow-hidden rounded-xl bg-[#132247]">
-                    <AnimatePresence mode="wait">
-                      <motion.img
-                        key={CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].src}
-                        src={CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].src}
-                        alt={CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].alt}
-                        referrerPolicy="no-referrer"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 1.05 }}
-                        transition={{ duration: 0.6, ease: "easeInOut" }}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        style={{ objectPosition: CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].objectPosition ?? 'center' }}
-                      />
-                    </AnimatePresence>
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].label}
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -5 }}
-                        transition={{ duration: 0.4 }}
-                        className="absolute bottom-1.5 left-1.5 bg-[#0d1b3d]/95 backdrop-blur-sm px-2 py-0.5 rounded text-[8px] font-bold text-[#f3ede2]/90 tracking-wide border border-white/5"
-                      >
-                        {CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].label}
-                      </motion.div>
-                    </AnimatePresence>
+                    <img
+                      key={CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].src}
+                      src={CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].src}
+                      alt={CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].alt}
+                      width={320}
+                      height={240}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 animate-carousel-fade-in"
+                      style={{ objectPosition: CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].objectPosition ?? 'center' }}
+                    />
+                    <div
+                      key={CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].label}
+                      className="absolute bottom-1.5 left-1.5 bg-[#0d1b3d]/95 backdrop-blur-sm px-2 py-0.5 rounded text-[8px] font-bold text-[#f3ede2]/90 tracking-wide border border-white/5 animate-carousel-fade-in"
+                    >
+                      {CAROUSEL_IMAGES[(carouselIndex + 1) % CAROUSEL_IMAGES.length].label}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -654,14 +693,20 @@ export default function App() {
       </section>
 
       {/* SECTION 6: FAQ SECTION */}
-      <FAQSection />
+      <Suspense fallback={null}>
+        <FAQSection />
+      </Suspense>
 
       {/* ENROLLMENT MODAL OVERLAY */}
-      <EnrollmentModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSuccess={handleRegistrationSuccess}
-      />
+      {shouldLoadModal && (
+        <Suspense fallback={null}>
+          <EnrollmentModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSuccess={handleRegistrationSuccess}
+          />
+        </Suspense>
+      )}
 
 
 
@@ -675,6 +720,8 @@ export default function App() {
               alt="Conexão Além da Tela"
               width={520}
               height={277}
+              loading="lazy"
+              decoding="async"
               className="h-14 xs:h-16 sm:h-[4.5rem] md:h-20 lg:h-24 w-auto object-contain object-center md:object-left"
             />
             <span className="block text-[8px] sm:text-[10px] uppercase font-bold tracking-widest text-[#f3ede2]/75 leading-none">

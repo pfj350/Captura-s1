@@ -9,13 +9,13 @@ export default function FAQSection() {
   const faqs: FAQItem[] = [
     {
       id: 'q-1',
-      question: 'O que é o Conecta Storywork e qual é a sua principal promessa?',
-      answer: 'O Conecta Storywork é um evento digital inédito, ao vivo e gratuito, desenhado para especialistas, líderes e profissionais liberais. A sua principal promessa é sobre CRIAR CONEXÃO real e magnética com as pessoas certas. Você aprenderá a estruturar sua comunicação utilizando princípios de narrativa da TV e do streaming, para atrair, engajar e, principalmente, se conectar com o público que valoriza o seu trabalho, gerando autoridade e retorno financeiro sem depender de algoritmos ou dancinhas.'
+      question: 'O que é o Conexão Além da Tela e qual é a sua principal promessa?',
+      answer: 'O Conexão Além da Tela é um evento digital inédito, ao vivo e gratuito, desenhado para especialistas, líderes e profissionais liberais. A sua principal promessa é sobre CRIAR CONEXÃO real e magnética com as pessoas certas. Você aprenderá a estruturar sua comunicação utilizando princípios de narrativa da TV e do streaming, para atrair, engajar e, principalmente, se conectar com o público que valoriza o seu trabalho, gerando autoridade e retorno financeiro sem depender de algoritmos ou dancinhas.'
     },
     {
       id: 'q-3',
       question: 'Eu preciso já ter um grande público ou saber falar perfeitamente em vídeo?',
-      answer: 'De forma alguma. O foco do Conecta Storywork é justamente lapidar e profissionalizar a sua comunicação atual. Você não precisa ter milhares de seguidores ou ser um apresentador profissional. Pelo contrário: aprenderá a se expressar com verdade e estratégia para atrair as pessoas certas (clientes de alto valor) que valorizam a profundidade e a seriedade do seu trabalho, independentemente do tamanho atual da sua audiência.'
+      answer: 'De forma alguma. O foco do Conexão Além da Tela é justamente lapidar e profissionalizar a sua comunicação atual. Você não precisa ter milhares de seguidores ou ser um apresentador profissional. Pelo contrário: aprenderá a se expressar com verdade e estratégia para atrair as pessoas certas (clientes de alto valor) que valorizam a profundidade e a seriedade do seu trabalho, independentemente do tamanho atual da sua audiência.'
     },
     {
       id: 'q-4',
@@ -25,12 +25,12 @@ export default function FAQSection() {
     {
       id: 'q-5',
       question: 'Como funcionará a transmissão e como recebo o meu acesso?',
-      answer: 'O Conecta Storywork será transmitido no dia 8 de Julho (quarta-feira) às 20:30 (Horário de Brasília). A transmissão é exclusiva e fechada para inscritos. Assim que preencher o formulário nesta página, você receberá a confirmação por e-mail e terá acesso direto ao nosso Grupo VIP do WhatsApp, onde enviaremos o link oficial de acesso à sala, materiais complementares e avisos cruciais.'
+      answer: 'O Conexão Além da Tela será transmitido no dia 8 de Julho (quarta-feira) às 20:30 (Horário de Brasília). A transmissão é exclusiva e fechada para inscritos. Assim que preencher o formulário nesta página, você receberá a confirmação por e-mail e terá acesso direto ao nosso Grupo VIP do WhatsApp, onde enviaremos o link oficial de acesso à sala, materiais complementares e avisos cruciais.'
     },
     {
       id: 'q-6',
       question: 'O evento será gravado? Poderei assistir depois?',
-      answer: 'Não há garantia de gravação disponível. O Conecta Storywork foi desenhado para ser uma experiência imersiva e interativa ao vivo. A energia do encontro em tempo real, os insights práticos compartilhados no momento e o networking exclusivo do chat fazem toda a diferença para o seu aprendizado. Por isso, sugerimos fortemente que reserve a data na sua agenda imediatamente após concluir sua inscrição.'
+      answer: 'Não há garantia de gravação disponível. O Conexão Além da Tela foi desenhado para ser uma experiência imersiva e interativa ao vivo. A energia do encontro em tempo real, os insights práticos compartilhados no momento e o networking exclusivo do chat fazem toda a diferença para o seu aprendizado. Por isso, sugerimos fortemente que reserve a data na sua agenda imediatamente após concluir sua inscrição.'
     }
   ];
 
@@ -118,7 +118,7 @@ export default function FAQSection() {
 
               <div className="mt-6 sm:mt-8">
                 <a
-                  href="https://wa.me/5561982360909?text=Ola!%20Tenho%20duvidas%20sobre%20o%20evento%20Conecta%20Storywork"
+                  href="https://wa.me/5561995820229?text=Ola!%20Tenho%20duvidas%20sobre%20o%20evento%20Conexao%20Alem%20da%20Tela"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex w-full items-center justify-center gap-2.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] text-white py-3 sm:py-3.5 px-6 font-bold text-xs sm:text-sm transition-all duration-200 shadow-md hover:scale-[1.02] active:scale-[0.98]"
